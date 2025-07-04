@@ -56,7 +56,11 @@ class ParallelConvert:
         """ Convert width to servo angle """
         leg = (width / 2) + self.offset  # Remove double for two fingers and add offset
         # Law of Cosines
-        return -1 * acos ( (self.r * self.r + leg * leg - self.c * self.c) / (2 * self.r * leg) )
+        num = self.r * self.r + leg * leg - self.c * self.c
+        den = 2 * self.r * leg
+        if den == 0:
+            return 0
+        return -1 * acos ( num / den )  # Negative because servo is reversed
 
     def angleToWidth(self, ang):
         """ Convert angle to width for this gripper """
